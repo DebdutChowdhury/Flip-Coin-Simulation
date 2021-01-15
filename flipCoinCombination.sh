@@ -6,39 +6,56 @@ declare -A flipCoin
 
 for (( i=0; i<num; i++ ))
 do
-        rand=$((RANDOM%2))
+        rand=$((RANDOM%4))
         if [ $rand -eq 1 ]
         then
-                flipCoin[$i]="Head"
+                flipCoin[$i]="Hh"
+	elif [ $rand -eq 2 ]
+	then
+		flipCoin[$i]="Tt"
+	elif [ $rand -eq 3 ]
+	then
+		flipCoin[$i]="Ht"
         else
-                flipCoin[$i]="Tail"
+                flipCoin[$i]="Th"
         fi
 done
 
 echo keys: ${!flipCoin[@]}
 echo values: ${flipCoin[@]}
 
-heads=0
-tails=0
+hh=0
+ht=0
+th=0
+tt=0
+
 
 for j in ${flipCoin[@]}
 do
-        if [ "$j" == "Head" ]
+        if [ "$j" == "Hh" ]
         then
-                ((heads++))
-        elif [ "$j" == "Tail" ]
+                ((hh++))
+        elif [ "$j" == "Tt" ]
         then
-                ((tails++))
-        else
-                echo Invallid 
+                ((tt++))
+	elif [ "$j" == "Ht" ]
+	then
+		((ht++))
+	else
+		((th++))
         fi
 done
-echo Heads: $heads
-echo Tails: $tails
+echo Heads: $hh
+echo Tails: $tt
+echo Combo: $th
+echo Combo: $ht
 
-per_head=$(((heads*100)/num))
-per_tail=$(((tails*100)/num))
-
-echo Singlet percentage of heads: $per_head %
-echo Singlet percentage of tails: $per_tail %
+per_hh=$(((hh*100)/num))
+per_tt=$(((tt*100)/num))
+per_th=$(((th*100)/num))
+per_ht=$(((ht*100)/num))
+echo Singlet percentage of heads: $per_hh %
+echo Singlet percentage of tails: $per_tt %
+echo Singlet percentage of combo: $per_th %
+echo Singlet percentage of combo: $per_ht %
 
